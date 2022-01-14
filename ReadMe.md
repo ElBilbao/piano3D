@@ -5,7 +5,9 @@ Piano 3D consists of 3D scene of a playable piano in a stage. This is done with 
 ## Credits
 
 Three js: https://threejs.org/
+
 Threex:
 
 - https://www.threejsgames.com/extensions/#threex.volumetricspotlight
-  Blender Models:
+
+Blender Models:
