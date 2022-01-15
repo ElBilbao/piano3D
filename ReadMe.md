@@ -2,6 +2,14 @@
 
 Piano 3D consists of 3D scene of a playable piano in a stage. This is done with WebGL through the Three js library, as well as Three js extension like Threex. Some models will be built or imported from Blender and credited below.
 
+## Storyboard
+
+![alt text](https://github.com/ElBilbao/piano3D/blob/main/storyboard/piano_front.png?raw=true)
+
+![alt text](https://github.com/ElBilbao/piano3D/blob/main/storyboard/piano_left.png?raw=true)
+
+![alt text](https://github.com/ElBilbao/piano3D/blob/main/storyboard/piano_closeup.png?raw=true)
+
 ## Credits
 
 Three js: https://threejs.org/
