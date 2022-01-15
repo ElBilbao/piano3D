@@ -19,3 +19,5 @@ Threex:
 - https://www.threejsgames.com/extensions/#threex.volumetricspotlight
 
 Blender Models:
+
+- Piano: https://www.turbosquid.com/3d-models/piano-3d-model-1305257
