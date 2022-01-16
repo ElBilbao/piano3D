@@ -18,6 +18,10 @@ Threex:
 
 - https://www.threejsgames.com/extensions/#threex.volumetricspotlight
 
-Blender Models:
+Assets:
 
 - Piano: https://www.turbosquid.com/3d-models/piano-3d-model-1305257
+
+- Platform Wood Texture: https://www.pinterest.com.mx/pin/279856564330708368/
+
+- Notes MP3: https://github.com/fuhton/piano-mp3/tree/master/piano-mp3
