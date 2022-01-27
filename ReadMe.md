@@ -24,6 +24,6 @@ Assets:
 
 - Platform Wood Texture: https://www.pinterest.com.mx/pin/279856564330708368/
 
-- Notes MP3: https://github.com/fuhton/piano-mp3/tree/master/piano-mp3
+- Notes MP3: https://github.com/ledlamp/piano-sounds/tree/master/GreatAndSoftPiano
 
 - Curtains: https://blend-exchange.com/b/mbwLX2WN
