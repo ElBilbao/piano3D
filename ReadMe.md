@@ -1,6 +1,10 @@
 # Piano 3D
 
-Piano 3D consists of 3D scene of a playable piano in a stage. This is done with WebGL through the Three js library, as well as Three js extension like Threex. Some models will be built or imported from Blender and credited below.
+Piano 3D consists of 3D scene of a playable piano in a stage. This is done with WebGL through the Three js library, as well as Three js extension like Threex. Some models will be built programmatically, others will be imported from Blender and credited below.
+
+## Getting started
+
+Clone the repo in your local enviroment. All WebGL dependecies are already within the repo or linked with a CDN, so no further installations are needed. To run the proyect you will need to instantiate a local web server, this can be done using an extension like [Live Server in VSCode](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer). The scene should be displaying, click the piano's keys! (If a white screen appears, consult the console)
 
 ## Storyboard
 
