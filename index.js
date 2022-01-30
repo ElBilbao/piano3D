@@ -1,6 +1,7 @@
 import * as THREE from "/three/build/three.module.js";
 import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
+import { notes } from "/notes_loading.js"; // Load notes' audio files from local directory
 
 var scene = new THREE.Scene();
 
@@ -20,6 +21,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 document.body.appendChild(renderer.domElement);
 
+// Keep the aspect ratio of objects the same, even when the window size changes
 window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -30,7 +32,7 @@ window.addEventListener("resize", () => {
 const controls = new OrbitControls(camera, renderer.domElement);
 const loader = new GLTFLoader();
 
-// IMPORT 3D models from blender
+// IMPORT Assets
 // ---- PIANO
 loader.load(
   "assets/models/named_piano.glb",
@@ -85,6 +87,7 @@ loader.load(
   }
 );
 
+// HANDLE assets
 // Utility elements to calculate clicking in scene
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -170,7 +173,7 @@ var render = function () {
   renderer.render(scene, camera);
 };
 
-function onMouseMove(event) {
+function onMouseClick(event) {
   event.preventDefault();
   // Calculate where the click landed based on window
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -183,22 +186,35 @@ function onMouseMove(event) {
 
   for (var i = 0; i < intersects.length; i++) {
     console.log(intersects[i].object.name);
-    if (
-      !intersects[i].object.name.includes("Piano") &&
-      intersects[i].object.name != ""
-    ) {
-      //intersects[i].object.rotation.x = 0.1;
-      this.tl = new TimelineMax();
+    if (intersects[i].object.name + ".mp3" in notes) {
+      // Play key note sound
+      notes[intersects[i].object.name + ".mp3"].isPlaying = false;
+      notes[intersects[i].object.name + ".mp3"].play();
 
-      this.tl.to(intersects[i].object.position, 0.5, {
-        y: 2.4,
-        ease: Expo.easeOut,
-      });
-      this.tl.to(intersects[i].object.position, 0.1, {
-        y: 2.5,
-        ease: Expo.easeOut,
-      });
-      return;
+      // Based on key type, move it up and down
+      this.tl = new TimelineMax();
+      // Not Sharp key
+      if (!intersects[i].object.name.includes("s")) {
+        this.tl.to(intersects[i].object.position, 0.5, {
+          y: 2.4,
+          ease: Expo.easeOut,
+        });
+        this.tl.to(intersects[i].object.position, 0.1, {
+          y: 2.5,
+          ease: Expo.easeOut,
+        });
+      } else {
+        // Sharp key 2.619872570037842
+        this.tl.to(intersects[i].object.position, 0.5, {
+          y: 2.549872570037842,
+          ease: Expo.easeOut,
+        });
+        this.tl.to(intersects[i].object.position, 0.1, {
+          y: 2.619872570037842,
+          ease: Expo.easeOut,
+        });
+      }
+      return; // We only want to handle 1 selected mesh when clicked on scene (the closest one)
     }
   }
 }
@@ -206,4 +222,4 @@ function onMouseMove(event) {
 render();
 
 // Event listeners using DOM
-document.body.addEventListener("click", onMouseMove);
+document.body.addEventListener("click", onMouseClick);
