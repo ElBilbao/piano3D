@@ -18,10 +18,6 @@ Clone the repo in your local enviroment. All WebGL dependecies are already withi
 
 Three js: https://threejs.org/
 
-Threex:
-
-- https://www.threejsgames.com/extensions/#threex.volumetricspotlight
-
 Assets:
 
 - Piano: https://www.turbosquid.com/3d-models/piano-3d-model-1305257

@@ -215,8 +215,6 @@ roof.castShadow = true;
 roof.receiveShadow = true;
 scene.add(roof);
 
-// ---- TODO: STAGE LIGHT using external three js library
-
 renderer.render(scene, camera);
 
 // ---- RENDERING FUNCTION
