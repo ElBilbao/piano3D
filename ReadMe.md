@@ -28,6 +28,10 @@ Assets:
 
 - Platform Wood Texture: https://www.pinterest.com.mx/pin/279856564330708368/
 
+- Walls Dark Texture: https://www.pinterest.com.mx/amp/pin/1007610116600689798/
+
+- Background Texture: https://stock.adobe.com/mx/images/golden-palace-golden-city-castle-interior-fiction-backdrop-children-backdrop-concept-art-realistic-illustration-video-game-digital-cg-artwork-nature-scenery/238508300
+
 - Notes MP3: https://github.com/ledlamp/piano-sounds/tree/master/GreatAndSoftPiano
 
 - Curtains: https://blend-exchange.com/b/mbwLX2WN

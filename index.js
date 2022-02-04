@@ -11,10 +11,9 @@ var camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.z = 10;
 
 var renderer = new THREE.WebGLRenderer({ antiaalias: true });
-renderer.setClearColor("#e5e5e5");
+renderer.setClearColor("#000000");
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -30,6 +29,12 @@ window.addEventListener("resize", () => {
 });
 
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.maxPolarAngle = Math.PI * 0.5; // Limit camera movement to avoid looking at the platform from below
+
+// Spawn the camera looking at the piano
+camera.position.set(0, 5, 9.6);
+controls.target.set(0, -0.5, 0);
+
 const loader = new GLTFLoader();
 
 // IMPORT Assets
@@ -93,10 +98,26 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
 // Light creation and positioning
-var light = new THREE.PointLight(0xffffff, 2, 1000);
-light.position.set(4, 4, 15);
+var light = new THREE.PointLight(0xffffff, 2, 120);
+light.position.set(4, 5, 15);
 light.castShadow = true;
 scene.add(light);
+
+var platformLight = new THREE.PointLight(0xffffff, 2, 1000);
+platformLight.position.set(0, 50, 0);
+platformLight.castShadow = true;
+scene.add(platformLight);
+
+const spotLight = new THREE.SpotLight(0xffffff);
+spotLight.position.set(-10, 13, 0);
+spotLight.castShadow = true;
+spotLight.angle = 0.25;
+spotLight.distance = 100;
+spotLight.decay = 2;
+spotLight.penumbra = 0.1;
+spotLight.target.position.set(-2, 0, -2);
+scene.add(spotLight);
+scene.add(spotLight.target);
 
 // ---- WOOD PLATFORM
 var platGeo = new THREE.BoxGeometry(1, 1, 1);
@@ -113,15 +134,33 @@ var platMatCube = [platFace, platFace, platFace, platFace, platFace, platFace];
 var platform = new THREE.Mesh(platGeo, platMatCube);
 
 platform.receiveShadow = true;
-platform.scale.set(30, 1, 20);
+platform.scale.set(29, 1, 20);
 platform.position.set(0, -4.5, -5);
 scene.add(platform);
 
 // ---- WALLS
+// Load walls texture
+var backgroundTexture = new THREE.TextureLoader().load(
+  "assets/textures/background.jpg"
+);
+var darkTexture = new THREE.TextureLoader().load(
+  "assets/textures/dark_texture.jpg"
+);
+
+darkTexture.wrapS = THREE.RepeatWrapping;
+darkTexture.wrapT = THREE.RepeatWrapping;
+darkTexture.repeat.set(1, 1);
+var wallFace = new THREE.MeshBasicMaterial({
+  map: darkTexture,
+  side: THREE.DoubleSide,
+});
+wallFace.roughness = 1;
+var wallMatCube = [wallFace, wallFace, wallFace, wallFace, wallFace, wallFace];
+
 // LEFT
 var leftWallGeo = new THREE.BoxGeometry(1, 1, 1);
 var leftWallMat = new THREE.MeshBasicMaterial({ color: "black" });
-var leftWall = new THREE.Mesh(leftWallGeo, leftWallMat);
+var leftWall = new THREE.Mesh(leftWallGeo, wallMatCube);
 leftWall.scale.set(1, 20, 20);
 leftWall.position.set(-15, 5, -5);
 
@@ -132,7 +171,7 @@ scene.add(leftWall);
 // RIGHT
 var rightWallGeo = new THREE.BoxGeometry(1, 1, 1);
 var rightWallMat = new THREE.MeshBasicMaterial({ color: "black" });
-var rightWall = new THREE.Mesh(rightWallGeo, rightWallMat);
+var rightWall = new THREE.Mesh(rightWallGeo, wallMatCube);
 rightWall.scale.set(1, 20, 20);
 rightWall.position.set(15, 5, -5);
 
@@ -141,9 +180,22 @@ rightWall.receiveShadow = true;
 scene.add(rightWall);
 
 // BACK
+var backgroundFace = new THREE.MeshBasicMaterial({
+  map: backgroundTexture,
+  side: THREE.DoubleSide,
+});
+var backMatCube = [
+  wallFace,
+  wallFace,
+  wallFace,
+  wallFace,
+  backgroundFace,
+  wallFace,
+];
+
 var backWallGeo = new THREE.BoxGeometry(1, 1, 1);
 var backWallMat = new THREE.MeshBasicMaterial({ color: "black" });
-var backWall = new THREE.Mesh(backWallGeo, backWallMat);
+var backWall = new THREE.Mesh(backWallGeo, backMatCube);
 backWall.scale.set(30, 20, 1);
 backWall.position.set(0, 5, -15);
 
@@ -154,9 +206,10 @@ scene.add(backWall);
 // ---- ROOF
 var roofGeo = new THREE.BoxGeometry(1, 1, 1);
 var roofWallMat = new THREE.MeshBasicMaterial({ color: "black" });
-var roof = new THREE.Mesh(roofGeo, roofWallMat);
+var roof = new THREE.Mesh(roofGeo, wallMatCube);
 roof.scale.set(30, 1, 20);
 roof.position.set(0, 15, -5);
+roof.roughness = 0;
 
 roof.castShadow = true;
 roof.receiveShadow = true;
@@ -173,8 +226,10 @@ var render = function () {
   renderer.render(scene, camera);
 };
 
+// ---- EVENT LISTENER
 function onMouseClick(event) {
   event.preventDefault();
+  console.log(controls);
   // Calculate where the click landed based on window
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
