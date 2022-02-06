@@ -3,7 +3,7 @@ Loop through all the note keys and load their 7 keys (0-6) as well as their shar
 and load them into a dictionary that will be used in Event Listener
 All note mp3s are located in the assets local directory
 */
-import * as THREE from "./three/build/three.module.js";
+import * as THREE from "../three/build/three.module.js";
 
 var notes = {};
 
