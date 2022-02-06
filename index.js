@@ -1,7 +1,7 @@
-import * as THREE from "/three/build/three.module.js";
-import { GLTFLoader } from "/three/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from "/three/examples/jsm/controls/OrbitControls.js";
-import { notes } from "/notes_loading.js"; // Load notes' audio files from local directory
+import * as THREE from "./three/build/three.module.js";
+import { GLTFLoader } from "./three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from "./three/examples/jsm/controls/OrbitControls.js";
+import { notes } from "./notes_loading.js"; // Load notes' audio files from local directory
 
 var scene = new THREE.Scene();
 
