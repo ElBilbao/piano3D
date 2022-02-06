@@ -14,7 +14,7 @@ keys.forEach(function (key) {
   for (let i = 0; i < 7; ++i) {
     let current_key = key + i + ".mp3";
     const sound = new THREE.Audio(listener);
-    audioLoader.load(`/assets/notes/${current_key}`, function (buffer) {
+    audioLoader.load(`./assets/notes/${current_key}`, function (buffer) {
       sound.setBuffer(buffer);
       sound.setLoop(false);
     });
@@ -24,7 +24,7 @@ keys.forEach(function (key) {
     if (key != "b" && key != "e") {
       let current_sharp = key + "s" + i + ".mp3";
       const sharp_sound = new THREE.Audio(listener);
-      audioLoader.load(`/assets/notes/${current_sharp}`, function (buffer) {
+      audioLoader.load(`./assets/notes/${current_sharp}`, function (buffer) {
         sharp_sound.setBuffer(buffer);
         sharp_sound.setLoop(false);
       });
